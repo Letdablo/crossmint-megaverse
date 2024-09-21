@@ -6,10 +6,8 @@ Crossmint Megaverse es un proyecto que interactúa con la API de Crossmint para 
 ## Tabla de Contenidos
 
 - [Instalación](#instalación)
-- [Uso](#uso)
 - [Estructura del Proyecto](#estructura-del-proyecto)
 - [Scripts Disponibles](#scripts-disponibles)
-- [API](#api)
 - [Licencia](#licencia)
 
 ## Instalación
@@ -48,29 +46,6 @@ npm start
 
 Esto levantará la aplicación en `http://localhost:3000`.
 
-## Uso
-
-El proyecto carga el estado de una cuadrícula desde la API del Megaverse y permite crear objetos astrales como **Polyanets**, **Soloons** y **Comeths**. Estos objetos se pueden agregar en posiciones específicas de la cuadrícula.
-
-### Ejemplo de uso en React
-
-Este proyecto cuenta con un componente `GridComponent` que obtiene el estado de la cuadrícula y utiliza el hook `usePolyanetCross` para gestionar la creación de objetos astrales en las coordenadas diagonales:
-
-```typescript
-useEffect(() => {
-  const createAstralObjectsInGrid = async () => {
-    if (goal.length > 0) {
-      for (let x = 0; x < goal.length; x++) {
-        for (let y = 0; y < goal[x].length; y++) {
-          const astralObject = goal[x][y];
-          await createAstralObjects(astralObject, x, y);
-        }
-      }
-    }
-  };
-  createAstralObjectsInGrid();
-}, [goal]);
-```
 
 ## Estructura del Proyecto
 
@@ -78,12 +53,13 @@ useEffect(() => {
 crossmint-megaverse/
 │
 ├── public/                # Archivos estáticos
-├── src/                   # Código fuente del proyecto
-│   ├── api/               # Lógica de la API
-│   ├── components/        # Componentes de React
-│   ├── hooks/             # Custom hooks
-│   ├── styles/            # Estilos del proyecto
-│   └── utils/             # Funciones y helpers
+├── src/app/                   # Código fuente del proyecto
+│     ├── api/               # Lógica de la API
+│     ├── components/        # Componentes de React
+│     ├── content/           # texto
+│     ├── interfaces/        # interfaces y enums
+│     ├── models/            # clases 
+│     └── services/          # logica que se ejecuta en server side
 ├── .env                   # Variables de entorno
 ├── package.json           # Configuración de dependencias
 ├── README.md              # Documentación del proyecto
@@ -92,7 +68,7 @@ crossmint-megaverse/
 
 ## Scripts Disponibles
 
-### `npm start`
+### `npm run dev`
 Inicia la aplicación en modo de desarrollo.
 
 ### `npm run build`
@@ -100,45 +76,6 @@ Construye el proyecto para producción en la carpeta `build`.
 
 ### `npm run lint`
 Ejecuta ESLint para analizar problemas de estilo o errores en el código.
-
-### `npm test`
-Ejecuta las pruebas con Jest y React Testing Library.
-
-## API
-
-Este proyecto interactúa con la API de Crossmint Megaverse, utilizando los siguientes endpoints:
-
-### Crear un Polyanet
-```http
-POST /api/polyanets
-```
-
-**Parámetros**:
-- `row` (número): Fila en la cuadrícula.
-- `column` (número): Columna en la cuadrícula.
-- `candidateId` (string): ID del candidato.
-
-### Crear un Soloon
-```http
-POST /api/soloons
-```
-
-**Parámetros**:
-- `row` (número): Fila en la cuadrícula.
-- `column` (número): Columna en la cuadrícula.
-- `color` (string): Color del Soloon (puede ser "blue", "red", "purple", o "white").
-- `candidateId` (string): ID del candidato.
-
-### Crear un Cometh
-```http
-POST /api/comeths
-```
-
-**Parámetros**:
-- `row` (número): Fila en la cuadrícula.
-- `column` (número): Columna en la cuadrícula.
-- `direction` (string): Dirección del Cometh (puede ser "up", "down", "left", o "right").
-- `candidateId` (string): ID del candidato.
 
 ## Licencia
 
