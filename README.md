@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+README.md
+markdown
+Copiar código
+# Crossmint Megaverse
 
-## Getting Started
+Crossmint Megaverse es un proyecto que interactúa con el servicio de API de Crossmint para crear, manipular y administrar objetos astrales como **Polyanets**, **Soloons** y **Comeths** dentro de una cuadrícula en el **Megaverse**.
 
-First, run the development server:
+## Tabla de Contenidos
+
+- [Instalación](#instalación)
+- [Uso](#uso)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Scripts Disponibles](#scripts-disponibles)
+- [API](#api)
+- [Licencia](#licencia)
+
+## Instalación
+
+Para ejecutar este proyecto localmente, sigue los siguientes pasos:
+
+### 1. Clona el repositorio:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+git clone https://github.com/Letdablo/crossmint-megaverse.git
+2. Instala las dependencias:
+bash
+Copiar código
+cd crossmint-megaverse
+npm install
+3. Configura el proyecto
+Es importante tener un candidateId válido para interactuar con la API del Megaverse. Debes configurar las variables de entorno en un archivo .env:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+bash
+Copiar código
+REACT_APP_CANDIDATE_ID=<TU_CANDIDATE_ID>
+4. Ejecuta el proyecto:
+bash
+Copiar código
+npm start
+El proyecto debería estar disponible en http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Uso
+Este proyecto utiliza la API del Megaverse para crear objetos astrales en una cuadrícula basada en una plantilla dada. Puedes crear diferentes tipos de objetos astrales como:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Polyanets
+Soloons (azul, rojo, púrpura, blanco)
+Comeths (dirección: arriba, abajo, izquierda, derecha)
+Ejemplo de cómo se utiliza
+El componente GridComponent obtiene los datos del estado de la cuadrícula desde la API y los procesa para generar los objetos astrales en la cuadrícula correspondiente.
 
-## Learn More
+typescript
+Copiar código
+useEffect(() => {
+  const createAstralObjectsInGrid = async () => {
+    if (goal.length > 0) {
+      for (let x = 0; x < goal.length; x++) {
+        for (let y = 0; y < goal[x].length; y++) {
+          const astralObject = goal[x][y];
+          await createAstralObjects(astralObject, x, y);
+        }
+      }
+    }
+  };
+  createAstralObjectsInGrid();
+}, [goal]);
+Estructura del Proyecto
+bash
+Copiar código
+crossmint-megaverse/
+│
+├── public/                # Archivos estáticos
+├── src/                   # Código fuente del proyecto
+│   ├── api/               # Lógica de la API
+│   ├── components/        # Componentes de React
+│   ├── hooks/             # Custom hooks
+│   ├── styles/            # Estilos del proyecto
+│   └── utils/             # Funciones y helpers
+├── .env                   # Variables de entorno
+├── package.json           # Configuración de dependencias
+├── README.md              # Documentación del proyecto
+└── tsconfig.json          # Configuración de TypeScript
+Scripts Disponibles
+En este proyecto, puedes ejecutar los siguientes comandos:
 
-To learn more about Next.js, take a look at the following resources:
+npm start
+Inicia la aplicación en modo de desarrollo.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+npm run build
+Construye el proyecto para producción en la carpeta build.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+npm run lint
+Ejecuta ESLint para encontrar y corregir problemas de estilo y errores en el código.
 
-## Deploy on Vercel
+npm test
+Ejecuta las pruebas usando Jest y React Testing Library.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+API
+Este proyecto interactúa con la API de Crossmint Megaverse. Los objetos astrales se crean con las siguientes rutas:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Crear un Polyanet
+http
+Copiar código
+POST /api/polyanets
+Parámetros:
+
+row (número): La fila en la cuadrícula.
+column (número): La columna en la cuadrícula.
+candidateId (string): Tu ID de candidato.
+Crear un Soloon
+http
+Copiar código
+POST /api/soloons
+Parámetros:
+
+row (número): La fila en la cuadrícula.
+column (número): La columna en la cuadrícula.
+color (string): El color del Soloon ("blue", "red", "purple", "white").
+candidateId (string): Tu ID de candidato.
+Crear un Cometh
+http
+Copiar código
+POST /api/comeths
+Parámetros:
+
+row (número): La fila en la cuadrícula.
+column (número): La columna en la cuadrícula.
+direction (string): La dirección del Cometh ("up", "down", "left", "right").
+candidateId (string): Tu ID de candidato.
